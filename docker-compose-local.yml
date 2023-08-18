@@ -5,7 +5,7 @@ version: '3.7'
 
 services:
 
-  etd-base-template:
+  rabbitmq-email-notifier:
     container_name: 'rabbitmq-email-notifier'
     build:
       context: './'
