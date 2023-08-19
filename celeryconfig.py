@@ -8,6 +8,6 @@ timezone = 'US/Eastern'
 enable_utc = True
 worker_enable_remote_control = False
 task_routes = {
-    'etd-base-template.tasks.send_to_base':
-        {'queue': os.getenv("CONSUME_QUEUE_NAME", "next_queue")}
+    'rabbitmq-email-notifier.tasks.notify_email_message':
+        {'queue': os.getenv("CONSUME_QUEUE_NAME", "email-notifier")}
 }

@@ -14,7 +14,7 @@ timestamp = datetime.today().strftime('%Y-%m-%d')
 def configure_logger():  # pragma: no cover
     log_level = os.getenv("APP_LOG_LEVEL", "WARNING")
     log_file_path = os.getenv("LOGFILE_PATH",
-                              "/home/etdadm/logs/rabbitmq-email-notifier")
+                              "/home/appuser/logs/rabbitmq-email-notifier")
     formatter = logging.Formatter(
                 '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 

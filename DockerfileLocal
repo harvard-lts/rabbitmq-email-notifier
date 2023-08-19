@@ -22,7 +22,7 @@ WORKDIR /home/appuser
 
 COPY --chown=appuser ./ .
 
-# Update permissions for the etdadm user and group
+# Update permissions for the appuser user and group
 COPY change_id.sh /root/change_id.sh
 RUN chmod 755 /root/change_id.sh && \
   /root/change_id.sh -u 55031 -g 55031

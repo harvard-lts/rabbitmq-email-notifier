@@ -101,7 +101,7 @@ def notify_email_message(json_message):
         current_span.add_event(json.dumps(json_message))
 
         NEXT_TASK = os.getenv('NEXT_TASK')
-        NEXT_QUEUE = os.getenv('CONSUME_QUEUE_NAME')
+        NEXT_QUEUE = os.getenv('NEXT_QUEUE_NAME')
         expiration = _get_expiration()
 
         body = json_message["body"]

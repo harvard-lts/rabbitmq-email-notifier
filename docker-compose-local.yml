@@ -15,7 +15,7 @@ services:
       - './:/home/appuser'
       - '/tmp:/tmp'
       # Logs
-      - './logs:/home/appuser/logs'
+      - './logs:/home/appuser/logs/rabbitmq-email-notifier'
     env_file:
       - '.env'
     environment:

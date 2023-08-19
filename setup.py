@@ -26,6 +26,7 @@ setuptools.setup(
         'opentelemetry-exporter-otlp-proto-grpc==1.19.0',
         'opentelemetry-semantic-conventions==0.40b0',
         'packaging==23.1',
+        'pika==1.3.2',
         'pluggy==1.0.0',
         'project-paths==1.1.1',
         'pytest==7.3.1',

@@ -11,7 +11,7 @@ app1.config_from_object('celeryconfig')
 
 arguments = {"subject": "test subject",
              "body": "test message",
-             "receipients": "chip_goines@harvard.edu"}
+             "recipients": "john_harvard@harvard.edu"}
 
 res = app1.send_task('rabbitmq-email-notifier.tasks.notify_email_message',
                      args=[arguments], kwargs={},
