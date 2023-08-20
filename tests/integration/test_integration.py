@@ -1,6 +1,7 @@
 from celery import Celery
 import os
 import pika
+import json
 
 app1 = Celery('tasks')
 app1.config_from_object('celeryconfig')
@@ -18,7 +19,17 @@ def retrieve_from_queue():
     else:
         channel.basic_ack(delivery_tag=method_frame.delivery_tag)
         connection.close()
-        print(str(body))
+        json_str = body.decode(encoding='UTF-8')
+        json_data = (json.loads(json_str))[0][0]
+        if "subject" in json_data:
+            if json_data["subject"] != "test subject":
+                return False
+        if "body" in json_data:
+            if json_data["body"] != "test message":
+                return False
+        if "recipients" in json_data:
+            if json_data["recipients"] != "john_harvard@harvard.edu":
+                return False
         return True
 
 
