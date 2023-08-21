@@ -1,0 +1,33 @@
+# Build all images and run all containers
+# `docker-compose -f docker-compose-local.yml up -d --build --force-recreate`
+
+version: '3.7'
+
+services:
+
+  rabbitmq-email-notifier:
+    container_name: 'rabbitmq-email-notifier'
+    build:
+      context: './'
+      dockerfile: './DockerfileLocal'
+    tty: true
+    volumes:
+      - './:/home/appuser'
+      - '/tmp:/tmp'
+      # Logs
+      - './logs:/home/appuser/logs/rabbitmq-email-notifier'
+    env_file:
+      - '.env'
+    environment:
+      - CELERY_LOG_LEVEL=DEBUG
+      - CONSUME_QUEUE_NAME=email-notifier
+      # Worker API
+      - '10589:8081'
+    # networks:
+    #   - etd-net
+
+# Create a custom docker network if it does not exist already
+# networks:
+#  etd-net:
+#     name: etd-net
+
