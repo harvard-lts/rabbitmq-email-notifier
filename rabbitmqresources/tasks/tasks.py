@@ -41,6 +41,8 @@ tracer = trace.get_tracer(__name__)
 # https://github.com/celery/celery/issues/4079#issuecomment-1270085680
 hbeat_path = os.getenv("HEARTBEAT_FILE", "/tmp/worker_heartbeat")
 ready_path = os.getenv("READINESS_FILE", "/tmp/worker_ready")
+TASK_NAME = os.getenv("NOTIFIER_TASK_NAME",
+                      "rabbitmq-email-notifier.tasks.notify_email_message")
 update_interval = float(os.getenv("HEALTHCHECK_UPDATE_INTERVAL", 15.0))
 HEARTBEAT_FILE = Path(hbeat_path)
 READINESS_FILE = Path(ready_path)
@@ -88,7 +90,7 @@ app.steps["worker"].add(LivenessProbe)
 
 
 @app.task(serializer='json',
-          name='rabbitmq-email-notifier.tasks.notify_email_message')
+          name=TASK_NAME)
 def notify_email_message(json_message):
     ctx = None
     if "traceparent" in json_message:  # pragma: no cover, tracing is not being tested # noqa: E501
