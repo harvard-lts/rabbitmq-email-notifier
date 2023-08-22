@@ -5,5 +5,5 @@
 // default values: 
 //  registryCredentialsId = "${env.REGISTRY_ID}"
 //  registryUri = 'https://registry.lts.harvard.edu'
-def endpoints = ["integration"]
-ltsBasicPipeline.call("rabbitmq-email-notifier", "ETD", "etdadm", "10610", endpoints, "lts-etd-alerts")
+def endpoints = []
+ltsBasicPipeline.call("rabbitmq-email-notifier", "DAIS", "hdc3a", "10582", endpoints, "hdc-3a")
