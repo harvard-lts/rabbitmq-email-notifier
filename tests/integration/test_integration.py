@@ -3,7 +3,7 @@ import os
 import pika
 import json
 
-app1 = Celery()
+app1 = Celery('tasks')
 app1.config_from_object('celeryconfig')
 
 
@@ -41,10 +41,8 @@ class TestNotifierIntegrationClass():
                      "recipients": "john_harvard@harvard.edu"}
 
         # send msg to queue
-        NOTIFIER_TASK_NAME = os.getenv("NOTIFIER_TASK_NAME",
-                                       "rabbitmq-email-notifier." +
-                                       "tasks.notify_email_message")
-        app1.send_task(NOTIFIER_TASK_NAME, args=[arguments], kwargs={},
+        app1.send_task('rabbitmq-email-notifier.tasks.notify_email_message',
+                       args=[arguments], kwargs={},
                        queue=os.getenv("CONSUME_QUEUE_NAME", "email-notifier"))
 
         assert retrieve_from_queue()

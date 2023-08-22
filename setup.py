@@ -5,14 +5,14 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="lts-rabbitmqemailnotifier",
-    version="0.0.3",
+    version="0.0.1",
     author="Chip Goines",
     author_email="chip_goines@harvard.edu",
     description="A set of utilities for placing a message " +
                 "onto a queue for an emailer listener to receive",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/harvard-lts/rabbitmq-email-notifier",
+    url="https://github.huit.harvard.edu/harvard-lts/rabbitmq-email-notifier",
     packages=setuptools.find_packages(),
     install_requires=[
         'celery==5.2.7',
@@ -37,7 +37,6 @@ setuptools.setup(
         'retrying==1.3.4',
         'toml==0.10.2',
         'tomli==2.0.1',
-        'twine==4.0.2',
         'urllib3==2.0.2'
     ],
     classifiers=[
