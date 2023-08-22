@@ -128,17 +128,17 @@ Once inside the container, build the distribution.
 
 A new directory `dist` will be created in the container.
 
-#### Step 7C: Register for an account
+#### Register for an account
 
 [Register for an account](https://test.pypi.org/account/register/) on the test python package repository. Enable two-factor authentication for logins. [Create a token](https://test.pypi.org/manage/account/#api-tokens).
 
-#### Step 7D: Upload package to the test repository
+#### Upload package to the test repository
 
 Publish the package to the test repository `testpypi` before publishing it to the production repository.
 
 `python3 -m twine upload --repository testpypi dist/*`
 
-#### Step 7E: Test the package
+#### Test the package
 Open the package in the repository and view the version history.
 
 https://test.pypi.org/project/rabbitmq-email-notifier/0.0.4/
