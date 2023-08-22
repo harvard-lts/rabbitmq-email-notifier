@@ -6,13 +6,14 @@ now = datetime.now()
 timestamp = now.strftime("%Y%m%d%H%M")
 job_ticket_id = f"{timestamp}_rabbitmq_email_notifier"
 
-app1 = Celery('tasks')
+app1 = Celery()
 app1.config_from_object('celeryconfig')
 
 arguments = {"subject": "test subject",
              "body": "test message",
              "recipients": "john_harvard@harvard.edu"}
-
-res = app1.send_task('rabbitmq-email-notifier.tasks.notify_email_message',
-                     args=[arguments], kwargs={},
+NOTIFIER_TASK_NAME = os.getenv("NOTIFIER_TASK_NAME",
+                               "rabbitmq-email-notifier." +
+                               "tasks.notify_email_message")
+res = app1.send_task(NOTIFIER_TASK_NAME, args=[arguments], kwargs={},
                      queue=os.getenv("CONSUME_QUEUE_NAME"))

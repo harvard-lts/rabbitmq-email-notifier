@@ -28,4 +28,4 @@ RUN chmod 755 /root/change_id.sh && \
 
 USER appuser
 
-CMD ["celery", "-A", "tasks.tasks", "worker", "--loglevel=info", "--queues", "email-notifier"]
+CMD celery -A rabbitmqresources.tasks.tasks worker -E --loglevel=$CELERY_LOG_LEVEL --queues $CONSUME_QUEUE_NAME
