@@ -1,17 +1,9 @@
 # rabbitmq-email-notifier
 python template for etd projects
 
-<a href="https://github.com/harvard-lts/rabbitmq-email-notifier/actions/workflows/pytest.yml"><img src="https://github.com/harvard-lts/rabbitmq-email-notifier/actions/workflows/pytest.yml/badge.svg"></a>
-
-<a href="https://github.com/harvard-lts/rabbitmq-email-notifier/actions/workflows/pytest.yml"><img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/cgoines/68bd7e7d15e4025d7bf71431bad92771/raw/covbadge.json"></a>
-
 # Using this Repository
 Read the wiki in the rabbitmq-email-notifier repo for instructions on how to set up the template and badge for your repository:
 https://github.com/harvard-lts/rabbitmq-email-notifier/wiki
-
-### References
-
-- Coverage badge adapted from [Ned Batchelder](https://nedbatchelder.com/blog/202209/making_a_coverage_badge.html)
 
 ## Local setup
     
@@ -53,23 +45,23 @@ Dev deployment will occur using Jenkins.  To trigger the development deployment,
 ## QA
 QA is hosted on servers that contain L4 data.  Jenkins is not permitted to deploy to these servers so for QA, Jenkins will only perform the build.  To deploy:
 1. Commit and push to 'main'.
-2. If any IF changes happened, use ansible deploy commands from the [ETD-IF](https://github.huit.harvard.edu/LTS/ETD-IF/blob/main/README.md) project.  Otherwise, manually restart the stack on the server that hosts QA.  
+2. If any IF changes happened, use ansible deploy commands from the ETD-IF project.  Otherwise, manually restart the stack on the server that hosts QA.  
 
 ## Prod
 Deploying to prod requires that the code be tagged in 'main'.  That means the code should be stable and ready for a release. 
 1. Create the tag and push to the repo if this hasn't been done.
-2.Open [Blue Ocean](https://ci.lib.harvard.edu/blue/organizations/jenkins/ETD%20Base%20Template/)
-3.Click on the "Branches" tab.
+2. Open Jenkins
+3. Click on the "Branches" tab.
 NOTE: you should see a pipeline with your new tag.  (if not, click on the "scan repository now" link in the sidebar.) 
-4.Click on the green play (triangle) button to start the build
-5.Follow the build progress using the blue ocean view
-6.The build process should end with a green status. the docker image is now ready for deployment to prod.
-7.Work with ops to deploy to prod using the ETD-IF project.
+4. Click on the green play (triangle) button to start the build
+5. Follow the build progress using the blue ocean view
+6. The build process should end with a green status. the docker image is now ready for deployment to prod.
+7. Work with ops to deploy to prod using the ETD-IF project.
 
 ### Prerequisites to running docker locally
 - Requires telemetry/jaeger docker running
 - Make sure .env has JAEGER_NAME and JAEGER_SERVICE_NAME (see .env.example)
-- - Note JAEGER_NAME must have local ip (if on vpn go to Cisco Icon -> Show Statistics Window -> CLient Address (IPv4)
+- - Note JAEGER_NAME must have local ip (if on vpn go to Cisco Icon -> Show Statistics Window -> Client Address (IPv4)
 - start jaeger docker
 - `docker pull jaegertracing/all-in-one:latest` followed by
 - `docker run -d --name jaeger  -e COLLECTOR_ZIPKIN_HOST_PORT=:9411  -e COLLECTOR_OTLP_ENABLED=true  -p 6831:6831/udp  -p 6832:6832/udp  -p 5778:5778  -p 16686:16686  -p 4317:4317  -p 4318:4318  -p 14250:14250  -p 14268:14268  -p 14269:14269  -p 9411:9411  jaegertracing/all-in-one:latest`
@@ -85,7 +77,7 @@ NOTE: you should see a pipeline with your new tag.  (if not, click on the "scan 
 - Start up docker  
 `docker-compose -f docker-compose-local.yml up --build -d --force-recreate`
 
-- Bring up [DEV ETD Rabbit UI](https://b-7ecc68cb-6f33-40d6-8c57-0fbc0b84fa8c.mq.us-east-1.amazonaws.com/)
+- Bring up DEV ETD Rabbit UI
 - Look for `CONSUME_QUEUE_NAME` queue
 
 - Exec into the docker container
