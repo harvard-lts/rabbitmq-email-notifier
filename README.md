@@ -141,7 +141,7 @@ Publish the package to the test repository `testpypi` before publishing it to th
 #### Test the package
 Open the package in the repository and view the version history.
 
-https://test.pypi.org/project/rabbitmq-email-notifier/0.0.4/
+https://test.pypi.org/project/rabbitmq-email-notifier/0.0.6/
 
 ## More information
 Read the documenation for more information on building and publishing the distribution.
