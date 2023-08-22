@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="lts-rabbitmqemailnotifier",
-    version="0.0.3",
+    version="0.0.6",
     author="Chip Goines",
     author_email="chip_goines@harvard.edu",
     description="A set of utilities for placing a message " +
