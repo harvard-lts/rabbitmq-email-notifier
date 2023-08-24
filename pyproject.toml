@@ -1,15 +1,12 @@
 [project]
 name = "rabbitmq-email-notifier"
-version = "0.0.1"
+version = "0.0.6"
 
 [tool.pytest.ini_options]
 pythonpath = [
-  ".", "rabbitmq"
+  ".", "rabbitmqresources", "scripts"
 ]
 
 [tool.project-paths]
 dir_unit_out = "tests/unit/out/"
 dir_int_out = "tests/integration/out/"
-
-[tool.setuptools]
-packages = ["rabbitmq"]

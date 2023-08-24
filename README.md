@@ -1,17 +1,10 @@
 # rabbitmq-email-notifier
 python template for etd projects
 
-<a href="https://github.com/harvard-lts/rabbitmq-email-notifier/actions/workflows/pytest.yml"><img src="https://github.com/harvard-lts/rabbitmq-email-notifier/actions/workflows/pytest.yml/badge.svg"></a>
-
-<a href="https://github.com/harvard-lts/rabbitmq-email-notifier/actions/workflows/pytest.yml"><img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/cgoines/68bd7e7d15e4025d7bf71431bad92771/raw/covbadge.json"></a>
-
 # Using this Repository
 Read the wiki in the rabbitmq-email-notifier repo for instructions on how to set up the template and badge for your repository:
 https://github.com/harvard-lts/rabbitmq-email-notifier/wiki
 
-### References
-
-- Coverage badge adapted from [Ned Batchelder](https://nedbatchelder.com/blog/202209/making_a_coverage_badge.html)
 
 ## Local setup
     
@@ -46,6 +39,12 @@ Start the container
 docker-compose -f docker-compose-local.yml down
 ```
 
+This command stops and removes all containers specified in the docker-compose-local.yml configuration. This command can be used in place of the 'stop' and 'rm' commands.
+
+```
+docker-compose -f docker-compose-local.yml down
+```
+
 ### Deployment
 ## Dev
 Dev deployment will occur using Jenkins.  To trigger the development deployment, commit and push to the 'trial' or 'main' branch.
@@ -53,12 +52,12 @@ Dev deployment will occur using Jenkins.  To trigger the development deployment,
 ## QA
 QA is hosted on servers that contain L4 data.  Jenkins is not permitted to deploy to these servers so for QA, Jenkins will only perform the build.  To deploy:
 1. Commit and push to 'main'.
-2. If any IF changes happened, use ansible deploy commands from the [ETD-IF](https://github.huit.harvard.edu/LTS/ETD-IF/blob/main/README.md) project.  Otherwise, manually restart the stack on the server that hosts QA.  
+2. If any IF changes happened, use ansible deploy commands from the ETD-IF project.  Otherwise, manually restart the stack on the server that hosts QA.  
 
 ## Prod
 Deploying to prod requires that the code be tagged in 'main'.  That means the code should be stable and ready for a release. 
 1. Create the tag and push to the repo if this hasn't been done.
-2.Open [Blue Ocean](https://ci.lib.harvard.edu/blue/organizations/jenkins/ETD%20Base%20Template/)
+2.Open Jenkins
 3.Click on the "Branches" tab.
 NOTE: you should see a pipeline with your new tag.  (if not, click on the "scan repository now" link in the sidebar.) 
 4.Click on the green play (triangle) button to start the build
@@ -85,7 +84,7 @@ NOTE: you should see a pipeline with your new tag.  (if not, click on the "scan 
 - Start up docker  
 `docker-compose -f docker-compose-local.yml up --build -d --force-recreate`
 
-- Bring up [DEV ETD Rabbit UI](https://b-7ecc68cb-6f33-40d6-8c57-0fbc0b84fa8c.mq.us-east-1.amazonaws.com/)
+- Bring up DEV ETD Rabbit UI
 - Look for `CONSUME_QUEUE_NAME` queue
 
 - Exec into the docker container
@@ -113,3 +112,42 @@ NOTE: you should see a pipeline with your new tag.  (if not, click on the "scan 
 
 ### Using OpenTelemetry for tracing
 This app uses OpenTelemetry (https://opentelemetry.io/) for live tracing. To see how it is implemented in the application, refer to this wiki: https://wiki.harvard.edu/confluence/display/LibraryTechServices/OpenTelemetry
+
+### Build and publish the package
+
+#### Prepare the distribution
+* Update the version number in `setup.py`
+* To publish a pre-release version, add a letter and a number after the version number e.g. `0.0.1a1`
+* Remove the old `dist/` directory from the previous build if necessary
+
+#### Build the distribution
+
+Once inside the container, build the distribution.
+
+`python3 setup.py sdist bdist_wheel`
+
+A new directory `dist` will be created in the container.
+
+#### Register for an account
+
+[Register for an account](https://test.pypi.org/account/register/) on the test python package repository. Enable two-factor authentication for logins. [Create a token](https://test.pypi.org/manage/account/#api-tokens).
+
+#### Upload package to the test repository
+
+Publish the package to the test repository `testpypi` before publishing it to the production repository.
+
+`python3 -m twine upload --repository testpypi dist/*`
+
+#### Test the package
+Open the package in the repository and view the version history.
+
+https://test.pypi.org/project/rabbitmq-email-notifier/0.0.6/
+
+## More information
+Read the documenation for more information on building and publishing the distribution.
+
+* [Generating distribution archives](https://packaging.python.org/tutorials/packaging-projects/#generating-distribution-archives)
+
+* [Uploading the distribution archives](https://packaging.python.org/tutorials/packaging-projects/#uploading-the-distribution-archives)
+
+* https://tom-christie.github.io/articles/pypi/
