@@ -38,7 +38,7 @@ setuptools.setup(
         'toml==0.10.2',
         'tomli==2.0.1',
         'twine==4.0.2',
-        'urllib3==2.0.2'
+        'urllib3==2.0.6'
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
